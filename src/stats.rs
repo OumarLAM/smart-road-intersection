@@ -1,5 +1,6 @@
 use crate::vehicle::Vehicle;
 pub struct Statistics {
+    pub collisions: u32,
     max_vehicles: usize,
     max_velocity: f64,
     min_velocity: f64,
@@ -11,6 +12,7 @@ pub struct Statistics {
 impl Statistics {
     pub fn new() -> Statistics {
         Statistics {
+            collisions: 0,
             max_vehicles: 0,
             max_velocity: 0.0,
             min_velocity: f64::MAX,
@@ -30,9 +32,9 @@ impl Statistics {
         }
     }
 
-    // pub fn increment_close_calls(&mut self) {
-    //     self.close_calls += 1;
-    // }
+    pub fn increment_close_calls(&mut self) {
+        self.close_calls += 1;
+    }
 
     pub fn display(&self) {
         println!("Max vehicles: {}", self.max_vehicles);

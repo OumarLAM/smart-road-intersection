@@ -58,7 +58,7 @@ fn main() -> Result<(), String> {
                 Event::KeyDown { keycode: Some(Keycode::Right), .. } => {
                     let (x, y, direction) = spawn_vehicle('w');
                     vehicles.push(Vehicle::new(x, y, 100.0, 'w', direction));
-                },
+                }, 
                 _ => {}
             }
         }
@@ -88,13 +88,39 @@ fn spawn_vehicle(route: char) -> (f64, f64, char) {
 
     let mut rng = rand::thread_rng();
     let &(x, y) = positions.choose(&mut rng).unwrap();
-    let direction = random_route();
+    let direction = random_route(route, x, y);
 
     (x, y, direction)
 }
 
-fn random_route() -> char {
-    let routes = ['r', 's', 'l'];
-    let mut rng = rand::thread_rng();
-    *routes.choose(&mut rng).unwrap()
+fn random_route(a: char, x: f64, y: f64) -> char {
+    let returned_route = match a {
+        's' => match x {
+            450.0 => 'l',
+            500.0 => 's',
+            550.0 => 'r',
+            _ => todo!()
+        },
+        'n' => match x {
+            300.0 => 'r',
+            350.0 => 's',
+            400.0 => 'l',
+            _ => todo!()
+        },
+        'w' => match y {
+            450.0 => 'l',
+            500.0 => 's',
+            550.0 => 'r',
+            _ => todo!()
+        },
+        'e' => match y {
+            300.0 => 'r',
+            350.0 => 's',
+            400.0 => 'l',
+            _ => todo!()
+        }
+        _ => todo!()
+    };
+
+    returned_route
 }

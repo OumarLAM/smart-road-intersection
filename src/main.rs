@@ -45,19 +45,19 @@ fn main() -> Result<(), String> {
                 },
                 Event::KeyDown { keycode: Some(Keycode::Up), .. } => {
                     let (x, y, direction) = spawn_vehicle('s');
-                    vehicles.push(Vehicle::new(x, y, 100.0, 's', direction));
+                    vehicles.push(Vehicle::new(x, y, 100.0, 50.0, 150.0, 's', direction));
                 },
                 Event::KeyDown { keycode: Some(Keycode::Down), .. } => {
                     let (x, y, direction) = spawn_vehicle('n');
-                    vehicles.push(Vehicle::new(x, y, 100.0, 'n', direction));
+                    vehicles.push(Vehicle::new(x, y, 100.0, 50.0, 150.0, 'n', direction));
                 },
                 Event::KeyDown { keycode: Some(Keycode::Left), .. } => {
                     let (x, y, direction) = spawn_vehicle('e');
-                    vehicles.push(Vehicle::new(x, y, 100.0, 'e', direction));
+                    vehicles.push(Vehicle::new(x, y, 100.0, 50.0, 150.0, 'e', direction));
                 },
                 Event::KeyDown { keycode: Some(Keycode::Right), .. } => {
                     let (x, y, direction) = spawn_vehicle('w');
-                    vehicles.push(Vehicle::new(x, y, 100.0, 'w', direction));
+                    vehicles.push(Vehicle::new(x, y, 100.0, 50.0, 150.0, 'w', direction));
                 }, 
                 _ => {}
             }
@@ -65,7 +65,7 @@ fn main() -> Result<(), String> {
 
         let dt = 1.0 / 60.0;
         physics::update_vehicles(&mut vehicles, dt);
-        // physics::check_collisions(&mut vehicles, 50.0, &mut stats);
+        physics::check_collisions(&mut vehicles, 50.0, &mut stats);
 
         renderer.render(&vehicles);
         stats.update(&vehicles);

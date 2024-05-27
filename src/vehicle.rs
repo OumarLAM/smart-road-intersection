@@ -2,6 +2,9 @@ pub struct Vehicle {
     pub x: f64,
     pub y: f64,
     pub velocity: f64,
+    pub initial_velocity: f64,
+    pub slow_velocity: f64,
+    pub fast_velocity: f64,
     pub route: char,
     pub direction: char,
     pub time: f64,
@@ -10,11 +13,14 @@ pub struct Vehicle {
 }
 
 impl Vehicle {
-    pub fn new(x: f64, y: f64, velocity: f64, route: char, direction: char) -> Vehicle {
+    pub fn new(x: f64, y: f64, initial_velocity: f64, slow_velocity: f64, fast_velocity: f64, route: char, direction: char) -> Vehicle {
         Vehicle {
             x,
             y,
-            velocity,
+            velocity: initial_velocity,
+            initial_velocity,
+            slow_velocity,
+            fast_velocity,
             route,
             direction,
             time: 0.0,
@@ -26,6 +32,16 @@ impl Vehicle {
     pub fn update(&mut self, dt: f64) {
         self.time += dt;
         self.distance += self.velocity * dt;
+        
+        // Adjust velocity based on position
+        if self.is_approaching_intersection() {
+            self.velocity = self.slow_velocity;
+        } else if self.is_inside_intersection() {
+            self.velocity = self.fast_velocity;
+        } else {
+            self.velocity = self.initial_velocity;
+        }
+
         match (self.route, self.direction) {
             ('n', 'r') => {
                 self.y += self.velocity * dt;
@@ -99,7 +115,6 @@ impl Vehicle {
         }
     }
 
-
     fn calculate_initial_angle(route: char) -> f64 {
         match route {
             'n' => 0.0,
@@ -107,6 +122,24 @@ impl Vehicle {
             'e' => 90.0,
             'w' => 270.0,
             _ => 0.0,
+        }
+    }
+
+    fn is_approaching_intersection(&self) -> bool {
+        match self.route {
+            'n' => self.y > 250.0 && self.y < 300.0,
+            's' => self.y < 600.0 && self.y > 540.0,
+            'e' => self.x < 600.0 && self.x > 540.0,
+            'w' => self.x > 250.0 && self.x < 300.0,
+            _ => false,
+        }
+    }
+
+    fn is_inside_intersection(&self) -> bool {
+        match self.route {
+            'n' | 's' => self.y > 300.0 && self.y < 540.0,
+            'e' | 'w' => self.x > 300.0 && self.x < 540.0,
+            _ => false,
         }
     }
 }

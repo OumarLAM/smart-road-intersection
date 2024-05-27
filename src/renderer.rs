@@ -23,7 +23,7 @@ impl<'a> Renderer<'a> {
         self.canvas.copy(&self.background_texture, None, None).unwrap();
 
         for vehicle in vehicles {
-            let dst = Rect::new(vehicle.x as i32, vehicle.y as i32, 50, 50);
+            let dst = Rect::new(vehicle.x as i32, vehicle.y as i32, 37, 60);
             let center = Point::new(25, 25);
             self.canvas.copy_ex(&self.vehicle_texture, None, dst, vehicle.angle, center, false, false).unwrap();
         }

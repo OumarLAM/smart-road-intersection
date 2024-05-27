@@ -32,67 +32,67 @@ impl Vehicle {
                 if self.y > 300.0 {
                     self.angle = 90.0;
                     self.x -= self.velocity * dt;
-                    self.y = 300.0;
+                    self.y = 307.0;
                 }
             },
             ('n', 's') => self.y += self.velocity * dt,
             ('n', 'l') => {
                 self.y += self.velocity * dt;
-                if self.y > 450.0 {
+                if self.y > 441.0 {
                     self.angle = 270.0;
                     self.x += self.velocity * dt;
-                    self.y = 450.0;
+                    self.y = 441.0;
                 }
             },
             ('s', 'r') => {
                 self.y -= self.velocity * dt;
-                if self.y < 550.0 {
+                if self.y < 539.0 {
                     self.angle = 270.0;
                     self.x += self.velocity * dt;
-                    self.y = 550.0;
+                    self.y = 539.0;
                 }
             },
             ('s', 's') => self.y -= self.velocity * dt,
             ('s', 'l') => {
                 self.y -= self.velocity * dt;
-                if self.y < 400.0 {
+                if self.y < 405.0 {
                     self.angle = 90.0;
                     self.x -= self.velocity * dt;
-                    self.y = 400.0;
+                    self.y = 405.0;
                 }
             },
             ('e', 'r') => {
                 self.x -= self.velocity * dt;
-                if self.x < 550.0 {
+                if self.x < 541.0 {
                     self.angle = 180.0;
                     self.y -= self.velocity * dt;
-                    self.x = 550.0;
+                    self.x = 541.0;
                 }
             },
             ('e', 's') => self.x -= self.velocity * dt,
             ('e', 'l') => {
                 self.x -= self.velocity * dt;
-                if self.x < 400.0 {
+                if self.x < 405.0 {
                     self.angle = 0.0;
                     self.y += self.velocity * dt;
-                    self.x = 400.0;
+                    self.x = 405.0;
                 }
             },
             ('w', 'r') => {
                 self.x += self.velocity * dt;
-                if self.x > 300.0 {
+                if self.x > 307.0 {
                     self.angle = 0.0;
                     self.y += self.velocity * dt;
-                    self.x = 300.0;
+                    self.x = 307.0;
                 }
             },
             ('w', 's') => self.x += self.velocity * dt,
             ('w', 'l') => {
                 self.x += self.velocity * dt;
-                if self.x > 450.0 {
+                if self.x > 447.0 {
                     self.angle = 180.0;
                     self.y -= self.velocity * dt;
-                    self.x = 450.0;
+                    self.x = 447.0;
                 }
             },
             _ => (),

@@ -1,9 +1,14 @@
 use crate::vehicle::Vehicle;
 use crate::stats::Statistics;
 
+const SAFETY_DISTANCE: f64 = 150.0; // Define a safety distance
+
 pub fn update_vehicles(vehicles: &mut Vec<Vehicle>, dt: f64) {
-    for vehicle in vehicles.iter_mut() {
-        vehicle.update(dt);
+    for i in 0..vehicles.len() {
+        let (head, tail) = vehicles.split_at_mut(i);
+        let (vehicle, rest) = tail.split_first_mut().unwrap();
+        vehicle.update(dt, head, SAFETY_DISTANCE);
+        vehicle.update(dt, rest, SAFETY_DISTANCE);
     }
 }
 

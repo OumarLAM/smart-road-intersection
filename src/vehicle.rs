@@ -29,12 +29,23 @@ impl Vehicle {
         }
     }
 
-    pub fn update(&mut self, dt: f64) {
+    pub fn update(&mut self, dt: f64, other_vehicles: &[Vehicle], safety_distance: f64) {
         self.time += dt;
         self.distance += self.velocity * dt;
-        
-        // Adjust velocity based on position
-        if self.is_approaching_intersection() {
+
+        // Check for nearby vehicles
+        let mut slow_down = false;
+        for other in other_vehicles {
+            if self.is_too_close(other, safety_distance) {
+                slow_down = true;
+                break;
+            }
+        }
+
+        // Adjust velocity based on position and proximity to other vehicles
+        if slow_down {
+            self.velocity = self.slow_velocity;
+        } else if self.is_approaching_intersection() {
             self.velocity = self.slow_velocity;
         } else if self.is_inside_intersection() {
             self.velocity = self.fast_velocity;
@@ -127,10 +138,10 @@ impl Vehicle {
 
     fn is_approaching_intersection(&self) -> bool {
         match self.route {
-            'n' => self.y > 250.0 && self.y < 300.0,
-            's' => self.y < 600.0 && self.y > 540.0,
-            'e' => self.x < 600.0 && self.x > 540.0,
-            'w' => self.x > 250.0 && self.x < 300.0,
+            'n' => self.y > 200.0 && self.y < 250.0,
+            's' => self.y < 650.0 && self.y > 600.0,
+            'e' => self.x < 650.0 && self.x > 600.0,
+            'w' => self.x > 200.0 && self.x < 250.0,
             _ => false,
         }
     }
@@ -141,5 +152,10 @@ impl Vehicle {
             'e' | 'w' => self.x > 300.0 && self.x < 540.0,
             _ => false,
         }
+    }
+
+    fn is_too_close(&self, other: &Vehicle, safety_distance: f64) -> bool {
+        let distance = ((self.x - other.x).powi(2) + (self.y - other.y).powi(2)).sqrt();
+        distance < safety_distance
     }
 }

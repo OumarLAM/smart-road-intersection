@@ -13,7 +13,7 @@ use crate::vehicle::Vehicle;
 use crate::renderer::Renderer;
 use crate::stats::Statistics;
 
-const SPAWN_DELAY: Duration = Duration::from_millis(750);
+const SPAWN_DELAY: Duration = Duration::from_secs(1);
 
 struct SpawnTracker {
     last_spawn_n: Instant,
